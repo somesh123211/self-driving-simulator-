@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Udacity Autonomous Simulator - Live Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- NO socket.io script - pure HTTP polling so browser doesn't interfere with Udacity Simulator -->
+</head>
+<body>
+    <div class="fullscreen-app">
+        <!-- Top Navigation Header -->
+        <header class="top-nav">
+            <div class="nav-left">
+                <div class="status-dot"></div>
+                <h2>Udacity Autonomous <span>Voice Drive</span></h2>
+            </div>
+            <div class="nav-right">
+                <div class="badge badge-server" id="serverBadge">Server: Online</div>
+                <div class="badge badge-mode" id="modeBadge">MODE: DRIVE</div>
+            </div>
+        </header>
+
+        <!-- Main Theater Udacity Simulator Screen -->
+        <div class="theater-screen-container">
+            <img id="cameraFeed" src="{{ url_for('latest_frame') }}" alt="Udacity Simulator Live Camera Feed">
+            
+            <!-- In-Screen HUD Telemetry Overlay -->
+            <div class="hud-overlay-top">
+                <div class="hud-box">
+                    <span class="hud-label">SPEED</span>
+                    <span class="hud-value" id="speedVal">0.0</span>
+                    <span class="hud-unit">MPH</span>
+                </div>
+                <div class="hud-box">
+                    <span class="hud-label">STEERING</span>
+                    <span class="hud-value" id="steerVal">0.00</span>
+                    <span class="hud-unit">°</span>
+                </div>
+            </div>
+
+            <!-- In-Screen Live Voice Activity Overlay -->
+            <div class="hud-voice-overlay">
+                <div class="voice-status-pill" id="voiceStatusPill">
+                    <span class="mic-dot"></span>
+                    <span id="voiceStatusText">🚗 Auto Driving — Nudge Left/Right to adjust, or say "Stop"</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Control Console -->
+        <div class="bottom-console">
+            <!-- Voice Mic Assistant & Quick Command Chips -->
+            <div class="console-voice-section">
+                <button class="mic-btn-main" id="micBtn" title="Click to Speak Voice Command">
+                    <svg class="mic-svg" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                        <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+                    </svg>
+                    <span class="mic-label">SPEAK</span>
+                </button>
+                <div class="quick-chips">
+                    <button class="chip chip-stop" onclick="sendVoiceCommand('stop')">🛑 Stop</button>
+                    <button class="chip chip-reverse" onclick="sendVoiceCommand('go backward')">⏪ Backward</button>
+                    <button class="chip chip-drive" onclick="sendVoiceCommand('drive forward')">🚗 Forward</button>
+                    <button class="chip chip-left" onclick="sendVoiceCommand('turn left')">⬅️ Turn Left</button>
+                    <button class="chip chip-right" onclick="sendVoiceCommand('turn right')">➡️ Turn Right</button>
+                </div>
+            </div>
+
+            <!-- Manual Control Overrides with NUDGE behaviour -->
+            <div class="console-manual-section">
+                <div class="manual-label">MANUAL CONTROL (Left/Right = Nudge 1.5s → Auto-Returns)</div>
+                <div class="manual-buttons">
+                    <button class="btn-ctrl btn-left" onclick="nudge('left')">⬅️ NUDGE LEFT</button>
+                    <button class="btn-ctrl btn-stop" onclick="setMode('STOP')">🛑 STOP</button>
+                    <button class="btn-ctrl btn-right" onclick="nudge('right')">➡️ NUDGE RIGHT</button>
+                    <button class="btn-ctrl btn-forward" onclick="setMode('DRIVE')">🚗 AUTO DRIVE</button>
+                    <button class="btn-ctrl btn-reverse" onclick="setMode('REVERSE')">⏪ REVERSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NO socket.io - pure HTTP polling only -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

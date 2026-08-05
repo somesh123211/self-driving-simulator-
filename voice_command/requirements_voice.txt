@@ -1,0 +1,10 @@
+torch
+opencv-python
+pillow
+numpy
+flask
+flask-socketio
+python-socketio==4.6.1
+python-engineio==3.13.2
+eventlet
+SpeechRecognition

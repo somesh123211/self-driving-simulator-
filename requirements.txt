@@ -1,0 +1,7 @@
+python-socketio==4.6.1
+python-engineio==3.13.2
+flask
+eventlet
+pillow
+numpy
+h5py

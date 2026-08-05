@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Model weights (large binary files)
+*.pth
+*.h5
+*.keras
+*.ckpt
+
+# Training data
+driving_log.csv
+IMG/
+data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+*.tmp
+
+# Jupyter
+.ipynb_checkpoints/
